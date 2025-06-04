@@ -1,0 +1,32 @@
+import requests
+
+def get_random_quote():
+    response = requests.get("https://zenquotes.io/api/random")
+    if response.status_code == 200:
+        quote = response.json()[0]
+        return quote["q"], quote["a"]
+    else:
+        return None, None
+
+def main():
+    while True:
+        print("\nQuote Generator Menu:")
+        print("1. Get a random quote")
+        print("2. Quit")
+        
+        choice = input("What would you like to do? (1/2): ")
+        
+        if choice == "1":
+            quote, author = get_random_quote()
+            if quote and author:
+                print(f"\n\"{quote}\" - {author}")
+            else:
+                print("\nFailed to fetch quote. Please try again.")
+        elif choice == "2":
+            print("\nGoodbye!")
+            break
+        else:
+            print("\nInvalid choice. Please choose 1 or 2.")
+
+if __name__ == "__main__":
+    main()
